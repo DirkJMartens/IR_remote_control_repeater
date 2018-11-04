@@ -1,4 +1,4 @@
-- Started with bare ATMega328P-PU (no bootloader) 
+- Started with bare ATMega328P-PU (no bootloader in the chip yet) 
 - Download files for bootloader to use 8MHz internal RC oscillator (i.e. not using external xtal) 
 - use Arduino Uno to download bootloader 
 - once bootloader was installed in ATMega, remove AVR chip from Uno board and connect ATMega chip with Uno board using Rx/Tx lines 
@@ -12,15 +12,16 @@
  * - added My_Receiver.blink13(true);
  */
 
-/* Hardware setup:
- * - ATMega328 (ATMega168 is too small, 14kB program, 1.2K sram)
- * - IR receiver: GND / 5V / data=D11 (atmega pin 17) 
- * - IR send: GND / D3 (atmega pin 5) 
+/* Initial hardware setup:
+ * - Needs a ATMega328 (ATMega168 is too small, 14kB program, 1.2K sram)
+ * - IR receiver (e.g. 3-pin outputting raw signal, not modulated carrier): GND / 5V / data=D11 (atmega pin 17) 
+ * - IR send (=IR diode): GND / D3 (atmega pin 5) 
  * - green led: GND / D13 (atmega pin 19) 
  * - 16 Mhz xtal pins 9/10 (with 2 x 22pF caps to Gnd)
  * - pin 1 (reset) with 10K resistor to Vcc
  * - pins 7 / 20 : Vcc
  * - pins 8 / 22 : Gnd
+ * - 2 x 0.1uF decoupling capacitors across pins 7/8 and 20/22 of the ATMega328
  */
 
 /* Programming the ATMega328: 
@@ -36,7 +37,7 @@
  *    - ATMega now has bootloader and doesnt require Xtal. 
  *    - Downloading new sketch can be done using Rx/Tx pins on the ATMega 
  *    - If using laptop with USB port, a USB-to-RS232 adapter is needed. E.g. Arduino with CPU removed. 
- *    - If using laptop with serial port, a simple level-changer +-12v to 0/5V is enough. 
+ *    - If using laptop with DB9-serial port, a simple level-changer +-12v to 0/5V is enough (e.g. MAX232 chip). 
 */
 
 
