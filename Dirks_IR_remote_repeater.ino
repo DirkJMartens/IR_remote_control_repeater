@@ -6,29 +6,36 @@
  * - added My_Receiver.blink13(true);
  */
 /* Hardware setup:
- * - Arduino Uno ATMega328 (168 is too small, 14kB program, 1.2K sram)
- * - IR receiver: GND / 5V / data=D11 (atmega pin 17) 
- * - IR send: GND / D3 (atmega pin 5) 
+ * A) Repeater itself: 
+ * - Built around an ATMega328 (168 is too small, 14kB program, 1.2K sram)
+ * - IR receiver diode (3-pin type, outputting raw signal, not modulated carrier-type): GND / 5V / data=D11 (atmega pin 17) 
+ * - IR send diode (generic 2-pin IR diode): GND / D3 (atmega pin 5) 
  * - green BLINK led: GND / D13 (atmega pin 19) 
- * - 16 Mhz xtal pins 9/10 (with 2 x 22pF caps to Gnd)
- * - pin 1 (reset) with 10K resistor to Vcc
+ * - 16 Mhz xtal pins 9/10 (with 2 x 22pF caps to Gnd) (only needed if ATMega was configured for external Xtal before) 
+ * - pin 1 (reset) with 10K pull-up resistor to Vcc 
  * - pins 7 / 20 : Vcc
  * - pins 8 / 22 : Gnd
+ * - 2 x 0.1uF decoupling capacitors across ATMega pins 7/8 and 20/22. 
+ * B) To program the ATMega: 
+ * - ATMega ICSP or serial programmer, depending on the initial ATMega configuration. 
+ *      - if already containing bootloader and configured to use internal oscillator: serial programmer 
+ *      - if no bootloader or if configured for use with external xtal: ICSP programmer 
+ *      - Arduino UNO / Diecimila etc. can be used for both 
  * 
  * Programming the ATMega328: 
  * - Used instructions to re-configure to "breadboard AVR": 
  *    - Google "From Arduino to a Microcontroller on a Breadboard" 
- *    - Go to section "Minimal circuit (Eliminating external clock) 
+ *    - Go to section "Minimal circuit (Eliminating external clock)" 
  *    - Download "breadboard-1-6-x.zip" which will add an entry in "Board" section 
  *    - Unzip into a folder "hardware" which you need to create in your Arduino folder 
- *    - Download "ArduinoISP" into the Arduino Uno board which you will use as an ICSP programmer
+ *    - Download "ArduinoISP" sketch into the Arduino Uno board which you will use as an ICSP programmer
  *    - Connect ATMega to Uno using 4 wires (MOSI-MISO-SCK-Reset) as well as GND/VCC. 
  *    - If ATMega was programmed/used before with external XTAL, bootloading needs a Xtal 
  *    - Once bootloader was loaded and configured as "internal clock", you can remove the Xtal 
  *    - ATMega now has bootloader and doesnt require Xtal. 
  *    - Downloading new sketch can be done using Rx/Tx pins on the ATMega 
  *    - If using laptop with USB port, a USB-to-RS232 adapter is needed. E.g. Arduino with CPU removed. 
- *    - If using laptop with serial port, a simple level-changer +-12v to 0/5V is enough. 
+ *    - If using laptop with serial port, a simple level-changer +-12v to 0/5V is enough (e.g. MAX323 chip). 
 */
 
 /*
