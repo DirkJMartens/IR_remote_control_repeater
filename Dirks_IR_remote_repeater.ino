@@ -32,7 +32,7 @@
 */
 
 /*
- *  To read values from serial port: 
+ *  To read remote control IR codes on serial port: 
  *    - Connect Rx/Tx on final PCB to UNO D0/D1 (=Rx/Tx) 
  *    - Connect UNO Gnd to PCB Gnd 
  *    - Remove ATMega from Uno board 
